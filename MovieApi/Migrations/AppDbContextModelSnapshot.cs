@@ -53,18 +53,16 @@ namespace MovieApi.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
 
                     b.HasData(
                         new
                         {
                             id = 1,
-                            createdat = new DateTime(2023, 9, 20, 15, 43, 20, 115, DateTimeKind.Local).AddTicks(5301),
                             description = "Film Horor tahun2022",
                             image = "",
                             rating = 7f,
-                            title = "Pengabdi Setan 2",
-                            updatedat = new DateTime(2023, 9, 20, 15, 43, 20, 115, DateTimeKind.Local).AddTicks(5315)
+                            title = "Pengabdi Setan 2"
                         });
                 });
 #pragma warning restore 612, 618

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.IdentityModel.Tokens;
+using MovieApi.Models;
 using MovieApi.Services.Interface;
 
 namespace MovieApi.Controllers
@@ -26,7 +29,7 @@ namespace MovieApi.Controllers
             return Ok(MovieList);
         }
 
-        //api/movies
+        //api/movies/1
         [HttpGet("{ID}")]
         public IActionResult GetMovies(int ID)
         {
@@ -35,6 +38,21 @@ namespace MovieApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+            return Ok(MovieList);
+        }
+
+
+        [HttpPost]
+        public IActionResult Movies(MovieRequest model)
+        {
+
+            if (model.title.IsNullOrEmpty() || model.title == "string")
+            {
+                ModelState.AddModelError("title", "Please enter the title");
+                return ValidationProblem(ModelState);
+            };
+            var MovieList = _movie.AddMovies(model);
+            
             return Ok(MovieList);
         }
     }

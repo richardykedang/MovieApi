@@ -7,5 +7,6 @@ namespace MovieApi.Services.Interface
     {
         IEnumerable<Movie> GetMovies();
         Movie GetMoviesById(int id);
+        string AddMovies(MovieRequest model);
     }
 }

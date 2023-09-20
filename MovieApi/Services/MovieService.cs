@@ -15,6 +15,24 @@ namespace MovieApi.Services
         {
             _context = context;
         }
+
+        public string AddMovies(MovieRequest model)
+        {
+            Movie movie = new Movie()
+            {
+                title = model.title,
+                description = model.description,
+                image = model.image,
+                rating = model.rating,
+                created_at = DateTime.Now,
+            };
+
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
+            return "Success";
+           
+        }
+
         public IEnumerable<Movie> GetMovies()
         {
             return _context.Movies.ToList();
