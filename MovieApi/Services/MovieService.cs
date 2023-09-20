@@ -43,5 +43,15 @@ namespace MovieApi.Services
         {
             return _context.Movies.FirstOrDefault(x => x.id == id);
         }
+
+        public void Update(Movie movie, MovieRequest model)
+        {
+            movie.title = model.title;
+            movie.description = model.description;
+            movie.image = model.image;
+            movie.rating = model.rating;
+            movie.updated_at = DateTime.Now;
+            _context.SaveChanges();
+        }
     }
 }

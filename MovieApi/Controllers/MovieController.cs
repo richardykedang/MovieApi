@@ -41,7 +41,7 @@ namespace MovieApi.Controllers
             return Ok(MovieList);
         }
 
-
+        //api/movies
         [HttpPost]
         public IActionResult Movies(MovieRequest model)
         {
@@ -54,6 +54,26 @@ namespace MovieApi.Controllers
             var MovieList = _movie.AddMovies(model);
             
             return Ok(MovieList);
+        }
+
+        //api/movies/ID
+        [HttpPatch("{ID}")]
+        public IActionResult Movies(int ID, [FromBody] MovieRequest model)
+        {
+            if(model == null || model.title.IsNullOrEmpty())
+            {
+                return BadRequest("Movie is null");
+            }
+
+            Movie movie = _movie.GetMoviesById(ID);
+            if(movie == null)
+            {
+                return NotFound("Movie Cannot be found");
+            }
+            
+            _movie.Update(movie,model);
+            return NoContent();
+
         }
     }
 }
