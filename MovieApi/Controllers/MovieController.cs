@@ -1,12 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using MovieApi.Services.Interface;
 
 namespace MovieApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class MovieController : Controller
     {
-        public IActionResult Index()
+        private readonly IMovie _movie;
+
+        public MovieController(IMovie movie)
         {
-            return View();
+            _movie = movie;
+        }
+        //api/movies
+        [HttpGet]
+        public IActionResult GetMovies()
+        {
+            var MovieList = _movie.GetMovies();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(MovieList);
         }
     }
 }
