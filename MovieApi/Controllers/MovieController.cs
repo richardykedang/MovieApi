@@ -72,8 +72,23 @@ namespace MovieApi.Controllers
             }
             
             _movie.Update(movie,model);
-            return NoContent();
+            return Ok("Success");
 
+        }
+
+
+        //api/movies/ID
+        [HttpDelete("{ID}")]
+        public IActionResult Movies(int ID)
+        {
+            Movie movie = _movie.GetMoviesById(ID);
+            if(movie == null)
+            {
+                return NotFound("Movie Not Found");
+            }
+
+            _movie.Delete(movie);
+            return Ok();
         }
     }
 }

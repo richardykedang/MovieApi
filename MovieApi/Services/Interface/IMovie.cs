@@ -9,5 +9,6 @@ namespace MovieApi.Services.Interface
         Movie GetMoviesById(int id);
         string AddMovies(MovieRequest model);
         void Update(Movie movie, MovieRequest model);
+        void Delete(Movie movie);
     }
 }

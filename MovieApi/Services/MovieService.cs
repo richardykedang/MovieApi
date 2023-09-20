@@ -33,6 +33,12 @@ namespace MovieApi.Services
            
         }
 
+        public void Delete(Movie movie)
+        {
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+        }
+
         public IEnumerable<Movie> GetMovies()
         {
             return _context.Movies.ToList();
