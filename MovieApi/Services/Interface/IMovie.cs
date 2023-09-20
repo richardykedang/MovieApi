@@ -6,5 +6,6 @@ namespace MovieApi.Services.Interface
     public interface IMovie
     {
         IEnumerable<Movie> GetMovies();
+        Movie GetMoviesById(int id);
     }
 }

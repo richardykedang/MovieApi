@@ -25,5 +25,17 @@ namespace MovieApi.Controllers
             }
             return Ok(MovieList);
         }
+
+        //api/movies
+        [HttpGet("{ID}")]
+        public IActionResult GetMovies(int ID)
+        {
+            var MovieList = _movie.GetMoviesById(ID);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(MovieList);
+        }
     }
 }

@@ -20,5 +20,10 @@ namespace MovieApi.Services
             return _context.Movies.ToList();
            
         }
+
+        public Movie GetMoviesById(int id)
+        {
+            return _context.Movies.FirstOrDefault(x => x.id == id);
+        }
     }
 }
