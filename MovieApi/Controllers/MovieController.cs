@@ -43,7 +43,7 @@ namespace MovieApi.Controllers
 
         //api/movies
         [HttpPost]
-        public IActionResult Movies(MovieRequest model)
+        public IActionResult Movies([FromForm] MovieCreateRequest model)
         {
 
             if (model.title.IsNullOrEmpty() || model.title == "string")
@@ -51,14 +51,17 @@ namespace MovieApi.Controllers
                 ModelState.AddModelError("title", "Please enter the title");
                 return ValidationProblem(ModelState);
             };
-            var MovieList = _movie.AddMovies(model);
             
+            
+
+            var MovieList = _movie.AddMovies(model);
+
             return Ok(MovieList);
         }
 
         //api/movies/ID
         [HttpPatch("{ID}")]
-        public IActionResult Movies(int ID, [FromBody] MovieRequest model)
+        public IActionResult Movies(int ID, [FromForm] MovieUpdateRequest model)
         {
             if(model == null || model.title.IsNullOrEmpty())
             {

@@ -7,8 +7,8 @@ namespace MovieApi.Services.Interface
     {
         IEnumerable<Movie> GetMovies();
         Movie GetMoviesById(int id);
-        string AddMovies(MovieRequest model);
-        void Update(Movie movie, MovieRequest model);
+        string AddMovies(MovieCreateRequest model);
+        void Update(Movie movie, MovieUpdateRequest model);
         void Delete(Movie movie);
     }
 }

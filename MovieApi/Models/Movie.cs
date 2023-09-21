@@ -14,6 +14,7 @@ namespace MovieApi.Models
         public float rating { get; set; }
         [Required(ErrorMessage = "Please upload image")]
         public string image { get; set; }
+        //public string? image_path { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
     }

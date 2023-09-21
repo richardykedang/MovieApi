@@ -16,25 +16,55 @@ namespace MovieApi.Services
             _context = context;
         }
 
-        public string AddMovies(MovieRequest model)
+        public string AddMovies(MovieCreateRequest model)
         {
-            Movie movie = new Movie()
+            if (model.img != null)
             {
-                title = model.title,
-                description = model.description,
-                image = model.image,
-                rating = model.rating,
-                created_at = DateTime.Now,
-            };
+                string fileName = model.img.FileName;
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), (@"C:\Upload\" + fileName));
 
-            _context.Movies.Add(movie);
-            _context.SaveChanges();
-            return "Success";
-           
+                FileInfo file = new FileInfo(filePath);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.img.CopyTo(fileStream);
+                }
+                var tes = filePath;
+                Movie movie = new Movie()
+                {
+                    title = model.title,
+                    description = model.description,
+                    image = tes,
+                    rating = model.rating,
+                    created_at = DateTime.Now,
+                };
+
+                _context.Movies.Add(movie);
+                _context.SaveChanges();
+                return "Success";
+
+            }
+
+            return "Gagal";
         }
 
         public void Delete(Movie movie)
         {
+            if (movie.image != null)
+            {
+                string fileName = movie.image;
+                
+
+                FileInfo file = new FileInfo(fileName);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+            }
             _context.Movies.Remove(movie);
             _context.SaveChanges();
         }
@@ -50,14 +80,32 @@ namespace MovieApi.Services
             return _context.Movies.FirstOrDefault(x => x.id == id);
         }
 
-        public void Update(Movie movie, MovieRequest model)
+        public void Update(Movie movie, MovieUpdateRequest model)
         {
-            movie.title = model.title;
-            movie.description = model.description;
-            movie.image = model.image;
-            movie.rating = model.rating;
-            movie.updated_at = DateTime.Now;
-            _context.SaveChanges();
+            if (model.img != null)
+            {
+                string fileName = model.img.FileName;
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), (@"C:\Upload\" + fileName));
+
+                FileInfo file = new FileInfo(filePath);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.img.CopyTo(fileStream);
+                }
+                var tes = filePath;
+                movie.title = model.title;
+                movie.description = model.description;
+                movie.image = tes;
+                movie.rating = model.rating;
+                movie.updated_at = DateTime.Now;
+                _context.SaveChanges();
+            }
+            
         }
     }
 }
