@@ -22,16 +22,19 @@ namespace MovieApi.Services
             {
                 string fileName = model.img.FileName;
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), (@"C:\Upload\" + fileName));
+                //string link = "https://bankindonesiagov-my.sharepoint.com/:f:/r/personal/richardy_pn_p_bi_go_id/Documents/tes?csf=1&web=1&e=B9uRYA";
+                //string filePath = Path.Combine(@link + fileName);
 
-                FileInfo file = new FileInfo(filePath);
-                if (file.Exists)
+                FileInfo files = new FileInfo(filePath);
+                if (files.Exists)
                 {
-                    file.Delete();
+                    files.Delete();
                 }
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     model.img.CopyTo(fileStream);
+                    //File.Copy(fileStream, link);
                 }
                 var tes = filePath;
                 Movie movie = new Movie()
@@ -80,7 +83,12 @@ namespace MovieApi.Services
             return _context.Movies.FirstOrDefault(x => x.id == id);
         }
 
-        public void Update(Movie movie, MovieUpdateRequest model)
+		public List<Movie> GetMoviesByTitle(string title)
+		{
+            return _context.Movies.Where(oh => oh.title.Contains(title)).ToList();
+		}
+
+		public void Update(Movie movie, MovieUpdateRequest model)
         {
             if (model.img != null)
             {

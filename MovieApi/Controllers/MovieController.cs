@@ -41,8 +41,21 @@ namespace MovieApi.Controllers
             return Ok(MovieList);
         }
 
-        //api/movies
-        [HttpPost]
+        //api/movies/1
+        //[HttpGet]
+        [HttpGet("{title}/tes")]
+		public IActionResult GetMoviesByTitle(string title)
+		{
+			var MovieList = _movie.GetMoviesByTitle(title);
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			return Ok(MovieList);
+		}
+
+		//api/movies
+		[HttpPost]
         public IActionResult Movies([FromForm] MovieCreateRequest model)
         {
 
